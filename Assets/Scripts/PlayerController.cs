@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public AnimatedSpriteRenderer sRDown;
     public AnimatedSpriteRenderer sRLeft;
     public AnimatedSpriteRenderer sRRight;
+    public AnimatedSpriteRenderer sRDeath;
     private AnimatedSpriteRenderer activeSR;
 
     private void Awake()
@@ -66,5 +67,33 @@ public class PlayerController : MonoBehaviour
 
         activeSR = sR;
         activeSR.idle = direction == Vector2.zero;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.layer == LayerMask.NameToLayer("Explosion"))
+        {
+            DeathSequence();
+        }
+    }
+
+    private void DeathSequence()
+    {
+        enabled = false;
+        GetComponent<PlayerBombsController>().enabled = false;
+
+        sRUp.enabled = false;
+        sRDown.enabled = false;
+        sRLeft.enabled = false;
+        sRRight.enabled = false;
+        sRDeath.enabled = true;
+
+        Invoke(nameof(OnDeathSequenceEnded), 1.25f);
+    }
+
+    private void OnDeathSequenceEnded()
+    {
+        gameObject.SetActive(false);
+        FindObjectOfType<GameManager>().CheckWinState();
     }
 }
