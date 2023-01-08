@@ -6,6 +6,11 @@ public class Explosion : MonoBehaviour
     public AnimatedSpriteRenderer middle;
     public AnimatedSpriteRenderer end;
 
+    private void Start()
+    {
+        AudioManager.instance.PlaySFX(1);
+    }
+
     public void SetActiveRenderer(AnimatedSpriteRenderer renderer)
     {
         start.enabled = renderer == start;

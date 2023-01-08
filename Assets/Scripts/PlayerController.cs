@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rgBody { get; private set; }
     private Vector2 direction = Vector2.down;
     public float moveSpeed = 5;
+    public float speedBonus = 1;
 
     public KeyCode inputUp = KeyCode.W;
     public KeyCode inputDown = KeyCode.S;
@@ -26,25 +27,28 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKey(inputUp))
+        if (!GameManager.instance.isPaused)
         {
-            SetDirection(Vector2.up, sRUp);
-        }
-        else if(Input.GetKey(inputDown))
-        {
-            SetDirection(Vector2.down, sRDown);
-        }
-        else if(Input.GetKey(inputLeft))
-        {
-            SetDirection(Vector2.left, sRLeft);
-        }
-        else if(Input.GetKey(inputRight))
-        {
-            SetDirection(Vector2.right, sRRight);
-        }
-        else
-        {
-            SetDirection(Vector2.zero, activeSR);
+            if (Input.GetKey(inputUp))
+            {
+                SetDirection(Vector2.up, sRUp);
+            }
+            else if (Input.GetKey(inputDown))
+            {
+                SetDirection(Vector2.down, sRDown);
+            }
+            else if (Input.GetKey(inputLeft))
+            {
+                SetDirection(Vector2.left, sRLeft);
+            }
+            else if (Input.GetKey(inputRight))
+            {
+                SetDirection(Vector2.right, sRRight);
+            }
+            else
+            {
+                SetDirection(Vector2.zero, activeSR);
+            }
         }
     }
 
@@ -79,6 +83,8 @@ public class PlayerController : MonoBehaviour
 
     private void DeathSequence()
     {
+        AudioManager.instance.PlaySFX(2);
+
         enabled = false;
         GetComponent<PlayerBombsController>().enabled = false;
 

@@ -28,7 +28,7 @@ public class PlayerBombsController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(inputKey) && bombsRemaining > 0)
+        if(Input.GetKeyDown(inputKey) && bombsRemaining > 0 && !GameManager.instance.isPaused)
         {
             StartCoroutine(PlaceBomb());
         }

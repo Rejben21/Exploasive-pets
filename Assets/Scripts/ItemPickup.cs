@@ -27,9 +27,10 @@ public class ItemPickup : MonoBehaviour
                 break;
 
             case ItemType.SpeedBoost:
-                if(player.GetComponent<PlayerController>().moveSpeed < 8)
+                if(player.GetComponent<PlayerController>().speedBonus < 3)
                 {
                     player.GetComponent<PlayerController>().moveSpeed++;
+                    player.GetComponent<PlayerController>().speedBonus++;
                 }
                 break;
         }
@@ -41,6 +42,7 @@ public class ItemPickup : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+            AudioManager.instance.PlaySFX(3);
             OnItemPickup(other.gameObject);
         }
     }
